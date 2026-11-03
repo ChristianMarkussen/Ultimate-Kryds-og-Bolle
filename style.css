@@ -1,0 +1,100 @@
+:root {
+  --gap-color: rgb(28, 28, 28);
+  --border-color: #ced4da;
+  --hover-color: #f2f2f2;
+  --player1: #00b4d8;
+  --player1-hover: #48cae4;
+  --player2: #dd2c2f;
+  --player2-hover: #e35053;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: sans-serif, "Gill Sans";
+}
+
+button {
+  width: 50px;
+  height: 50px;
+  margin: 3px;
+  padding: 0;
+  border: 2px solid;
+  border-color: var(--border-color);
+  border-radius: 6px;
+  background-color: white;
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
+
+.grid9x9 {
+  height: 600px;
+  width: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+
+  position: relative;
+}
+
+.flex9x9test {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 172px;
+  width: 172px;
+  border: 0.5rem solid white;
+  border-radius: 18px;
+  border-color: white;
+  background-color: white;
+  gap: 2px;
+  margin: 4px;
+}
+
+.grid9x9::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to right,
+      transparent 32.63%,
+      black 32.63%,
+      black 34.03%,
+      transparent 34.03%,
+      transparent 65.97%,
+      black 65.97%,
+      black 67.37%,
+      transparent 67.37%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 32.63%,
+      black 32.63%,
+      black 34.03%,
+      transparent 34.03%,
+      transparent 65.97%,
+      black 65.97%,
+      black 67.37%,
+      transparent 67.37%
+    );
+}
+
+#player1 {
+  padding: 6px;
+  border-radius: 8px;
+  background-color: var(--player1);
+  font-weight: 500;
+}
+
+#player2 {
+  padding: 6px;
+  border-radius: 8px;
+  background-color: var(--player2);
+  font-weight: 500;
+}
