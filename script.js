@@ -56,29 +56,29 @@ function isValidMove(boardIndex, cellIndex) {
 function checkSmallBoardWin(boardIndex) {
   return (
     (currentPlayer === boards[boardIndex][0] &&
-      boards[boardIndex][1] &&
-      boards[boardIndex][2]) ||
+      currentPlayer === boards[boardIndex][1] &&
+      currentPlayer === boards[boardIndex][2]) ||
     (currentPlayer === boards[boardIndex][3] &&
-      boards[boardIndex][4] &&
-      boards[boardIndex][5]) ||
+      currentPlayer === boards[boardIndex][4] &&
+      currentPlayer === boards[boardIndex][5]) ||
     (currentPlayer === boards[boardIndex][6] &&
-      boards[boardIndex][7] &&
-      boards[boardIndex][8]) ||
+      currentPlayer === boards[boardIndex][7] &&
+      currentPlayer === boards[boardIndex][8]) ||
     (currentPlayer === boards[boardIndex][0] &&
-      boards[boardIndex][3] &&
-      boards[boardIndex][6]) ||
+      currentPlayer === boards[boardIndex][3] &&
+      currentPlayer === boards[boardIndex][6]) ||
     (currentPlayer === boards[boardIndex][1] &&
-      boards[boardIndex][4] &&
-      boards[boardIndex][7]) ||
+      currentPlayer === boards[boardIndex][4] &&
+      currentPlayer === boards[boardIndex][7]) ||
     (currentPlayer === boards[boardIndex][2] &&
-      boards[boardIndex][5] &&
-      boards[boardIndex][8]) ||
+      currentPlayer === boards[boardIndex][5] &&
+      currentPlayer === boards[boardIndex][8]) ||
     (currentPlayer === boards[boardIndex][0] &&
-      boards[boardIndex][4] &&
-      boards[boardIndex][8]) ||
+      currentPlayer === boards[boardIndex][4] &&
+      currentPlayer === boards[boardIndex][8]) ||
     (currentPlayer === boards[boardIndex][2] &&
-      boards[boardIndex][4] &&
-      boards[boardIndex][6])
+      currentPlayer === boards[boardIndex][4] &&
+      currentPlayer === boards[boardIndex][6])
   );
 }
 
@@ -90,36 +90,35 @@ function setSmallBoardWin(boardIndex) {
     } else {
       button.parentElement.classList.add("small-board-win-o");
     }
-    activeBoard = null; // Reset activeBoard to allow the next player to choose any board
   }
 }
 
 function checkOverallWin() {
   return (
     (currentPlayer === smallBoardWins[0] &&
-      smallBoardWins[1] &&
-      smallBoardWins[2]) ||
+      currentPlayer === smallBoardWins[1] &&
+      currentPlayer === smallBoardWins[2]) ||
     (currentPlayer === smallBoardWins[3] &&
-      smallBoardWins[4] &&
-      smallBoardWins[5]) ||
+      currentPlayer === smallBoardWins[4] &&
+      currentPlayer === smallBoardWins[5]) ||
     (currentPlayer === smallBoardWins[6] &&
-      smallBoardWins[7] &&
-      smallBoardWins[8]) ||
+      currentPlayer === smallBoardWins[7] &&
+      currentPlayer === smallBoardWins[8]) ||
     (currentPlayer === smallBoardWins[0] &&
-      smallBoardWins[3] &&
-      smallBoardWins[6]) ||
+      currentPlayer === smallBoardWins[3] &&
+      currentPlayer === smallBoardWins[6]) ||
     (currentPlayer === smallBoardWins[1] &&
-      smallBoardWins[4] &&
-      smallBoardWins[7]) ||
+      currentPlayer === smallBoardWins[4] &&
+      currentPlayer === smallBoardWins[7]) ||
     (currentPlayer === smallBoardWins[2] &&
-      smallBoardWins[5] &&
-      smallBoardWins[8]) ||
+      currentPlayer === smallBoardWins[5] &&
+      currentPlayer === smallBoardWins[8]) ||
     (currentPlayer === smallBoardWins[0] &&
-      smallBoardWins[4] &&
-      smallBoardWins[8]) ||
+      currentPlayer === smallBoardWins[4] &&
+      currentPlayer === smallBoardWins[8]) ||
     (currentPlayer === smallBoardWins[2] &&
-      smallBoardWins[4] &&
-      smallBoardWins[6])
+      currentPlayer === smallBoardWins[4] &&
+      currentPlayer === smallBoardWins[6])
   );
 }
 
