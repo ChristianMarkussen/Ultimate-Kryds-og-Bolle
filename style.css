@@ -16,18 +16,20 @@ body {
   font-family: sans-serif, "Gill Sans";
 }
 
-#player1 {
+.player1 {
   padding: 6px;
   border-radius: 8px;
   background-color: var(--player1);
   font-weight: 500;
+  margin-block: 1rem;
 }
 
-#player2 {
+.player2 {
   padding: 6px;
   border-radius: 8px;
   background-color: var(--player2);
   font-weight: 500;
+  margin-block: 1rem;
 }
 
 #game-board {

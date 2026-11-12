@@ -41,8 +41,25 @@ gameBoard.addEventListener("click", function (event) {
   }
 });
 
+function resetPlayer() {
+  if (currentPlayer === "X") {
+    playerTurn.classList.remove("player2");
+    playerTurn.textContent = currentPlayer + "'s";
+  } else {
+    playerTurn.classList.remove("player1");
+    playerTurn.textContent = currentPlayer + "'s";
+  }
+}
+
 function changePlayer() {
   currentPlayer = currentPlayer === "X" ? "O" : "X";
+  if (currentPlayer === "X") {
+    playerTurn.classList.add("player1");
+    playerTurn.textContent = currentPlayer + "'s";
+  } else {
+    playerTurn.classList.add("player2");
+    playerTurn.textContent = currentPlayer + "'s";
+  }
 }
 
 function isValidMove(boardIndex, cellIndex) {
@@ -132,7 +149,14 @@ function alertWinner() {
 function placePiece(boardIndex, cellIndex) {
   boards[boardIndex][cellIndex] = currentPlayer;
   button.textContent = currentPlayer;
-  activeBoard = cellIndex; //TJEK
+
+  if (checkSmallBoardWin(boardIndex)) {
+    activeBoard = null;
+  } else if (isSmallBoardFull === true) {
+    activeBoard = null;
+  } else {
+    activeBoard = cellIndex;
+  }
 
   if (smallBoardWins[activeBoard] !== null) {
     activeBoard = null; // Reset activeBoard if the next board is already won
@@ -152,14 +176,16 @@ function showActiveBoard() {
 }
 
 function resetActiveBoard() {
-  if (activeBoard !== null) {
+  if (activeBoard === null) {
+    removeAllActiveBoards();
+  } else {
     gameBoard.children[activeBoard].classList.remove("active-board");
   }
 }
 
 function showAllActiveBoards() {
   for (let i = 0; i < 9; i++) {
-    if (smallBoardWins[i] !== null) {
+    if (smallBoardWins[i] === null || isSmallBoardFull === false) {
       gameBoard.children[i].classList.add("active-board");
       console.log(i);
     }
@@ -173,3 +199,19 @@ function removeAllActiveBoards() {
     }
   }
 }
+
+function isSmallBoardFull(boardIndex) {
+  let usedCell = 0;
+  for (let i = 0; i < 9; i++) {
+    if (boards[boardIndex][i] !== null) {
+      usedCell++;
+    }
+  }
+  if ((usedCell = 9)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const playerTurn = document.querySelector("#playerTurn");
