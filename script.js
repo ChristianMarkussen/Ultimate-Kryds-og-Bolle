@@ -1,5 +1,3 @@
-let savedGame;
-let gameState;
 let boards = [];
 let currentPlayer = "X";
 let smallBoardWins = [null, null, null, null, null, null, null, null, null];
@@ -190,7 +188,7 @@ function resetActiveBoard() {
 
 function showAllActiveBoards() {
   for (let i = 0; i < 9; i++) {
-    if (smallBoardWins[i] === null || isSmallBoardFull === false) {
+    if (smallBoardWins[i] === null && !isSmallBoardFull(i)) {
       gameBoard.children[i].classList.add("active-board");
       console.log(i);
     }
@@ -262,6 +260,8 @@ function resetGame() {
   localStorage.removeItem("ultimateTicTacToe");
 
   renderBoard();
+  removeSmallBoardWins();
+  setPlayerTurn(currentPlayer);
   showActiveBoard();
 }
 
@@ -275,8 +275,25 @@ function setPlayerTurn(currentPlayer) {
   }
 }
 
+function renderSmallBoardWins() {
+  for (let i = 0; i < 9; i++) {
+    if (smallBoardWins[i] === "X") {
+      gameBoard.children[i].classList.add("small-board-win-x");
+    } else if (smallBoardWins[i] === "O") {
+      gameBoard.children[i].classList.add("small-board-win-o");
+    }
+  }
+}
+
+function removeSmallBoardWins() {
+  for (let i = 0; i < 9; i++) {
+    gameBoard.children[i].classList.remove("small-board-win-x");
+    gameBoard.children[i].classList.add("small-board-win-o");
+  }
+}
+
 loadGame();
-setPlayerTurn(currentPlayer);
 renderBoard();
+renderSmallBoardWins;
+setPlayerTurn(currentPlayer);
 showActiveBoard();
-setSmallBoardWin();
