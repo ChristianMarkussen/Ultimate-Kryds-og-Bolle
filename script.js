@@ -1,3 +1,5 @@
+let savedGame;
+let gameState;
 let boards = [];
 let currentPlayer = "X";
 let smallBoardWins = [null, null, null, null, null, null, null, null, null];
@@ -33,20 +35,22 @@ gameBoard.addEventListener("click", function (event) {
 
   if (isValidMove(boardIndex, cellIndex)) {
     resetActiveBoard();
+    resetPlayer();
     placePiece(boardIndex, cellIndex);
     setSmallBoardWin(boardIndex, cellIndex);
     showActiveBoard();
     alertWinner();
     changePlayer();
+    saveGave();
   }
 });
 
 function resetPlayer() {
   if (currentPlayer === "X") {
-    playerTurn.classList.remove("player2");
+    playerTurn.classList.remove("player1");
     playerTurn.textContent = currentPlayer + "'s";
   } else {
-    playerTurn.classList.remove("player1");
+    playerTurn.classList.remove("player2");
     playerTurn.textContent = currentPlayer + "'s";
   }
 }
@@ -143,6 +147,7 @@ function checkOverallWin() {
 function alertWinner() {
   if (checkOverallWin()) {
     alert(`Player ${currentPlayer} wins the game!`);
+    resetGame();
   }
 }
 
@@ -152,7 +157,7 @@ function placePiece(boardIndex, cellIndex) {
 
   if (checkSmallBoardWin(boardIndex)) {
     activeBoard = null;
-  } else if (isSmallBoardFull === true) {
+  } else if (isSmallBoardFull(boardIndex)) {
     activeBoard = null;
   } else {
     activeBoard = cellIndex;
@@ -207,11 +212,71 @@ function isSmallBoardFull(boardIndex) {
       usedCell++;
     }
   }
-  if ((usedCell = 9)) {
-    return true;
-  } else {
-    return false;
-  }
+  return usedCell === 9;
 }
 
 const playerTurn = document.querySelector("#playerTurn");
+
+function saveGave() {
+  let gameState = {
+    boards,
+    currentPlayer,
+    smallBoardWins,
+    activeBoard,
+  };
+
+  localStorage.setItem("ultimateTicTacToe", JSON.stringify(gameState));
+}
+
+function loadGame() {
+  let savedGame = localStorage.getItem("ultimateTicTacToe");
+
+  if (savedGame !== null) {
+    let gameState = JSON.parse(savedGame);
+
+    boards = gameState.boards;
+    currentPlayer = gameState.currentPlayer;
+    smallBoardWins = gameState.smallBoardWins;
+    activeBoard = gameState.activeBoard;
+  }
+}
+
+function renderBoard() {
+  for (let i = 0; i < 9; i++) {
+    const smallBoard = gameBoard.children[i];
+
+    for (let j = 0; j < 9; j++) {
+      const button = smallBoard.children[j];
+
+      button.textContent = boards[i][j];
+    }
+  }
+}
+
+function resetGame() {
+  boards = Array.from({ length: 9 }, () => Array(9).fill(null));
+
+  currentPlayer = "X";
+  smallBoardWins = Array(9).fill(null);
+  activeBoard = null;
+  localStorage.removeItem("ultimateTicTacToe");
+
+  renderBoard();
+  showActiveBoard();
+}
+
+function setPlayerTurn(currentPlayer) {
+  if (currentPlayer === "X") {
+    playerTurn.classList.add("player1");
+    playerTurn.textContent = currentPlayer + "'s";
+  } else {
+    playerTurn.classList.add("player2");
+    playerTurn.textContent = currentPlayer + "'s";
+  }
+}
+
+loadGame();
+setPlayerTurn(currentPlayer);
+renderBoard();
+showActiveBoard();
+setSmallBoardWin();
