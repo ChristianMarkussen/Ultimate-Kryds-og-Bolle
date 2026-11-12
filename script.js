@@ -34,7 +34,7 @@ gameBoard.addEventListener("click", function (event) {
   if (isValidMove(boardIndex, cellIndex)) {
     resetActiveBoard();
     placePiece(boardIndex, cellIndex);
-    setSmallBoardWin(boardIndex);
+    setSmallBoardWin(boardIndex, cellIndex);
     showActiveBoard();
     alertWinner();
     changePlayer();
@@ -82,9 +82,10 @@ function checkSmallBoardWin(boardIndex) {
   );
 }
 
-function setSmallBoardWin(boardIndex) {
+function setSmallBoardWin(boardIndex, cellIndex) {
   if (checkSmallBoardWin(boardIndex)) {
     smallBoardWins[boardIndex] = currentPlayer;
+
     if (currentPlayer === "X") {
       button.parentElement.classList.add("small-board-win-x");
     } else {
@@ -131,7 +132,7 @@ function alertWinner() {
 function placePiece(boardIndex, cellIndex) {
   boards[boardIndex][cellIndex] = currentPlayer;
   button.textContent = currentPlayer;
-  activeBoard = cellIndex;
+  activeBoard = cellIndex; //TJEK
 
   if (smallBoardWins[activeBoard] !== null) {
     activeBoard = null; // Reset activeBoard if the next board is already won
@@ -143,7 +144,9 @@ function activeBoardCheck(boardIndex) {
 }
 
 function showActiveBoard() {
-  if (activeBoard !== null) {
+  if (activeBoard === null) {
+    showAllActiveBoards();
+  } else if (activeBoard !== null) {
     gameBoard.children[activeBoard].classList.add("active-board");
   }
 }
@@ -151,5 +154,22 @@ function showActiveBoard() {
 function resetActiveBoard() {
   if (activeBoard !== null) {
     gameBoard.children[activeBoard].classList.remove("active-board");
+  }
+}
+
+function showAllActiveBoards() {
+  for (let i = 0; i < 9; i++) {
+    if (smallBoardWins[i] !== null) {
+      gameBoard.children[i].classList.add("active-board");
+      console.log(i);
+    }
+  }
+}
+
+function removeAllActiveBoards() {
+  for (let i = 0; i < 9; i++) {
+    if (smallBoardWins[i] === null) {
+      gameBoard.children[i].classList.remove("active-board");
+    }
   }
 }
